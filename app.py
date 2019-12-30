@@ -120,6 +120,60 @@ trims_schema = TrimSchema(many=True)
 equipment_schema = EquipmentSchema()
 equipments_schema = EquipmentSchema(many=True)
 
+# Create maker
+@app.route('/maker', methods=['POST'])
+def add_maker():
+    maker_name = request.json['maker_name']
+    logo_url = request.json['logo_url']
+
+    new_maker = Maker(maker_name, logo_url)
+
+    db.session.add(new_maker)
+    db.session.commit()
+
+    return maker_schema.jsonify(new_maker)
+
+
+# Get all makers
+@app.route('/maker', methods=['GET'])
+def get_makers():
+    all_makers = Maker.query.all()
+    result = makers_schema.dump(all_makers)
+    return jsonify(result)
+
+
+# Get single maker
+@app.route('/maker/<maker_name>', methods=['GET'])
+def get_maker(maker_name):
+    maker = Maker.query.get(maker_name)
+    return maker_schema.jsonify(maker)
+
+
+# Update a maker
+@app.route('/maker/<maker_name>', methods=['PUT'])
+def update_maker(maker_name):
+    maker = Maker.query.get(maker_name)
+
+    maker_name = request.json['maker_name']
+    logo_url = request.json['logo_url']
+
+    maker.maker_name = maker_name
+    maker.logo_url = logo_url
+
+    db.session.commit()
+
+    return maker_schema.jsonify(maker)
+
+
+# Delete maker
+@app.route('/maker/<maker_name>', methods=['DELETE'])
+def delete_maker(maker_name):
+    maker = Maker.query.get(maker_name)
+    db.session.delete(maker)
+    db.session.commit()
+    return maker_schema.jsonify(maker)
+
+
 # Run Server
 if __name__ == "__main__":
     app.run(debug=True)
