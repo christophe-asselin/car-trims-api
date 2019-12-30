@@ -3,7 +3,8 @@ import marshmallow_sqlalchemy
 
 
 class Model(db.Model):
-    model_name = db.Column(db.String(30), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
+    model_name = db.Column(db.String(30))
     maker_name = db.Column(db.String(30), db.ForeignKey('maker.maker_name'),
                            nullable=False)
     maker = db.relationship('Maker', backref=db.backref('models', lazy=True))
@@ -24,5 +25,5 @@ class Model(db.Model):
 
 class ModelSchema(marshmallow_sqlalchemy.ModelSchema):
     class Meta:
-        fields = ('model_name', 'maker_name', 'img_url', 'generation_no',
+        fields = ('id', 'model_name', 'maker_name', 'img_url', 'generation_no',
                   'first_year', 'last_year')

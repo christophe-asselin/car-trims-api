@@ -3,18 +3,17 @@ from marshmallow_sqlalchemy import ModelSchema
 
 
 class Equipment(db.Model):
-    description = db.Column(db.String(300), primary_key=True)
-    trim_name = db.Column(db.String(30),
-                          db.ForeignKey('trim.trim_name'),
-                          primary_key=True, nullable=False)
+    id = db.Colun(db.Integer, primary_key=True)
+    description = db.Column(db.String(300), nullable=False)
+    trim_id = db.Column(db.Integer, db.ForeignKey('trim.id'), nullable=False)
     trim = db.relationship('Trim',
                            backref=db.backref('equipments', lazy=True))
 
-    def __init__(self, description, trim_name):
+    def __init__(self, description, trim_id):
         self.description = description
-        self.trim_name = trim_name
+        self.trim_id = trim_id
 
 
 class EquipmentSchema(ModelSchema):
     class Meta:
-        fields = ('description', 'trim_name')
+        fields = ('id', 'description', 'trim_name')

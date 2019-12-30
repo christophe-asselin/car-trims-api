@@ -2,11 +2,12 @@ import os
 from flask import Flask
 from .models import db
 from .views.makerview import maker_api
+from .views.modelview import model_api
 
 
 def create_app():
 
-    # Init ap
+    # Init app
     app = Flask(__name__)
     basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -17,6 +18,8 @@ def create_app():
 
     db.init_app(app)
 
+    # Add views
     app.register_blueprint(maker_api, url_prefix='/makers')
+    app.register_blueprint(model_api, url_prefix='/models')
 
     return app
