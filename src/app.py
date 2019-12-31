@@ -3,6 +3,7 @@ from flask import Flask
 from .models import db
 from .views.makerview import maker_api
 from .views.modelview import model_api
+from .views.trimview import trim_api
 
 
 def create_app():
@@ -21,5 +22,5 @@ def create_app():
     # Add views
     app.register_blueprint(maker_api, url_prefix='/makers')
     app.register_blueprint(model_api, url_prefix='/models')
-
+    app.register_blueprint(trim_api, url_prefix='/trims')
     return app

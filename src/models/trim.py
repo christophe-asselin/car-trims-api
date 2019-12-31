@@ -29,5 +29,6 @@ class Trim(db.Model):
 
 class TrimSchema(ModelSchema):
     class Meta:
-        fields = ('id', 'trim_name', 'model_id', 'img_url', 'vehicule_class',
-                  'body_style', 'layout', 'engine', 'transmission')
+        fields = ('id', 'trim_name', 'model.model_name', 'img_url',
+                  'vehicule_class', 'body_style', 'layout', 'engine',
+                  'transmission')
