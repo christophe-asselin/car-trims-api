@@ -1,5 +1,7 @@
 from . import db
-from marshmallow_sqlalchemy import ModelSchema
+from .model import ModelSchema
+from marshmallow_sqlalchemy.fields import Nested
+import marshmallow_sqlalchemy
 
 
 class Trim(db.Model):
@@ -27,8 +29,8 @@ class Trim(db.Model):
         self.transmission = transmission
 
 
-class TrimSchema(ModelSchema):
+class TrimSchema(marshmallow_sqlalchemy.ModelSchema):
+    model = Nested(ModelSchema)
+
     class Meta:
-        fields = ('id', 'trim_name', 'model.model_name', 'img_url',
-                  'vehicule_class', 'body_style', 'layout', 'engine',
-                  'transmission')
+        model = Trim

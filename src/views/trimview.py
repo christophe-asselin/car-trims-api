@@ -2,6 +2,7 @@ from flask import request, jsonify, Blueprint
 from ..models import db
 from ..models.trim import Trim, TrimSchema
 
+
 trim_api = Blueprint('trims', __name__)
 trim_schema = TrimSchema()
 trims_schema = TrimSchema(many=True)
@@ -30,7 +31,6 @@ def add_trim():
 @trim_api.route('', methods=['GET'])
 def get_trims():
     all_trims = Trim.query.all()
-    print(all_trims)
     return jsonify(trims_schema.dump(all_trims))
 
 # Get all trims by model
