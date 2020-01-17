@@ -1,9 +1,11 @@
 from . import db
+from .trim import TrimSchema
 from marshmallow_sqlalchemy import ModelSchema
+from marshmallow_sqlalchemy.fields import Nested
 
 
 class Equipment(db.Model):
-    id = db.Colun(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String(300), nullable=False)
     trim_id = db.Column(db.Integer, db.ForeignKey('trim.id'), nullable=False)
     trim = db.relationship('Trim',
@@ -15,5 +17,7 @@ class Equipment(db.Model):
 
 
 class EquipmentSchema(ModelSchema):
+    trim = Nested(TrimSchema)
+
     class Meta:
-        fields = ('id', 'description', 'trim_name')
+        model = Equipment

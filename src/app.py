@@ -4,6 +4,7 @@ from .models import db
 from .views.makerview import maker_api
 from .views.modelview import model_api
 from .views.trimview import trim_api
+from .views.equipmentview import equipment_api
 
 
 def create_app():
@@ -23,4 +24,5 @@ def create_app():
     app.register_blueprint(maker_api, url_prefix='/makers')
     app.register_blueprint(model_api, url_prefix='/models')
     app.register_blueprint(trim_api, url_prefix='/trims')
+    app.register_blueprint(equipment_api, url_prefix='/equipment')
     return app
